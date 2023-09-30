@@ -31,9 +31,7 @@ router.ws('/canvas', (ws, req) => {
                 });
                 break;
             default:
-                activeConnections[id].send(JSON.stringify({
-                    message:'Unknown message type:' + decodedMessage.type,
-                }));
+                console.log('Unknown message type:', decodedMessage.type);
         }
     });
 
