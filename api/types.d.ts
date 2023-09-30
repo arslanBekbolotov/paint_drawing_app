@@ -5,12 +5,12 @@ export interface ActiveConnections {
 }
 
 export interface IPayload{
-    x:string;
-    y:string;
+    x:number;
+    y:number;
     color:string;
 }
 
 export interface IncomingMessage {
     type: string;
-    payload: IPayload;
+    payload?: IPayload;
 }

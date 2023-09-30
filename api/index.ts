@@ -1,6 +1,7 @@
 import express from 'express';
 import expressWs from 'express-ws';
 import cors from 'cors';
+import crypto from "crypto";
 import {ActiveConnections, IncomingMessage} from "./types";
 
 const app = express();
@@ -22,12 +23,24 @@ router.ws('/canvas', (ws, req) => {
             case 'SEND_DRAWING':
                 Object.keys(activeConnections).forEach(connId => {
                     const conn = activeConnections[connId];
-                    conn.send(JSON.stringify({
-                        type: 'NEW_DRAWING',
-                        payload: {
-                            painting: decodedMessage.payload
-                        }
-                    }));
+                    if(connId !== id){
+                        conn.send(JSON.stringify({
+                            type: 'NEW_DRAWING',
+                            payload: decodedMessage.payload,
+                        }));
+                    }
+                });
+                break;
+
+            case 'FINISH':
+                Object.keys(activeConnections).forEach(connId => {
+                    const conn = activeConnections[connId];
+                    if(connId !== id){
+                        conn.send(JSON.stringify({
+                            type: 'FINISH',
+                            payload:{},
+                        }));
+                    }
                 });
                 break;
             default:
