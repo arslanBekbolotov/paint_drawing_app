@@ -1,10 +1,7 @@
 import Canvas from "./components/Canvas.tsx";
 
 function App() {
-
-  return (
-      <Canvas/>
-  )
+  return <Canvas />;
 }
 
-export default App
+export default App;
