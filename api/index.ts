@@ -32,6 +32,13 @@ router.ws("/canvas", (ws, req) => {
                 payload: painting.payload,
               }),
             );
+          } else if (painting.type === "SEND_CIRCLE") {
+            conn.send(
+              JSON.stringify({
+                type: "NEW_CIRCLE",
+                payload: painting.payload,
+              }),
+            );
           } else {
             conn.send(
               JSON.stringify({
@@ -52,6 +59,23 @@ router.ws("/canvas", (ws, req) => {
             conn.send(
               JSON.stringify({
                 type: "NEW_DRAWING",
+                payload: decodedMessage.payload,
+              }),
+            );
+          }
+        });
+
+        break;
+
+      case "SEND_CIRCLE":
+        paintingData.push(decodedMessage);
+
+        Object.keys(activeConnections).forEach((connId) => {
+          const conn = activeConnections[connId];
+          if (connId !== id) {
+            conn.send(
+              JSON.stringify({
+                type: "NEW_CIRCLE",
                 payload: decodedMessage.payload,
               }),
             );

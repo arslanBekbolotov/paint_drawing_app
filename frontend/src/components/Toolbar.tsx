@@ -2,9 +2,10 @@ import React from "react";
 
 interface Props {
   setStrokeColor: (color: string) => void;
+  setTool: (tool: string) => void;
 }
 
-const Toolbar: React.FC<Props> = ({ setStrokeColor }) => {
+const Toolbar: React.FC<Props> = ({ setStrokeColor, setTool }) => {
   const colors = [
     "white",
     "black",
@@ -42,6 +43,12 @@ const Toolbar: React.FC<Props> = ({ setStrokeColor }) => {
             }}
           />
         ))}
+      </div>
+      <div style={{ marginBottom: "10px" }}>
+        <button onClick={() => setTool("circle")}>Circle</button>
+      </div>
+      <div>
+        <button onClick={() => setTool("brush")}>Brush</button>
       </div>
     </div>
   );
